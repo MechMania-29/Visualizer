@@ -1,0 +1,138 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Game/PlayButton.gd" type="Script" id=1]
+[ext_resource path="res://Game/UI.gd" type="Script" id=2]
+
+[node name="MarginContainer" type="MarginContainer"]
+anchor_bottom = 1.0
+margin_right = 65.0
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UI" type="VBoxContainer" parent="."]
+margin_right = 65.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+margin_right = 65.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 16.0
+
+[node name="LeftSideInfo" type="VBoxContainer" parent="UI/HBoxContainer"]
+margin_bottom = 640.0
+size_flags_horizontal = 11
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="TimeControls" type="VBoxContainer" parent="UI/HBoxContainer"]
+margin_left = 4.0
+margin_right = 61.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.25
+
+[node name="Panel" type="PanelContainer" parent="UI/HBoxContainer/TimeControls"]
+margin_right = 57.0
+margin_bottom = 63.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 7.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/HBoxContainer/TimeControls/Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 50.0
+margin_bottom = 56.0
+
+[node name="Label" type="Label" parent="UI/HBoxContainer/TimeControls/Panel/VBoxContainer"]
+margin_right = 43.0
+margin_bottom = 15.0
+rect_pivot_offset = Vector2( -232, 55 )
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "Turn:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="UI/HBoxContainer/TimeControls/Panel/VBoxContainer"]
+margin_top = 19.0
+margin_right = 43.0
+margin_bottom = 49.0
+rect_pivot_offset = Vector2( -232, 55 )
+size_flags_horizontal = 3
+size_flags_vertical = 7
+size_flags_stretch_ratio = 2.0
+text = "0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton" type="Button" parent="UI/HBoxContainer/TimeControls"]
+visible = false
+margin_top = 61.0
+margin_right = 59.0
+margin_bottom = 81.0
+size_flags_horizontal = 3
+
+[node name="PlayButton" type="Button" parent="UI/HBoxContainer/TimeControls"]
+margin_top = 67.0
+margin_right = 57.0
+margin_bottom = 87.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+pressed = true
+text = "Playing"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ForwardButton" type="Button" parent="UI/HBoxContainer/TimeControls"]
+visible = false
+margin_top = 106.0
+margin_right = 59.0
+margin_bottom = 126.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Timeline" type="VSlider" parent="UI/HBoxContainer/TimeControls"]
+margin_top = 91.0
+margin_right = 57.0
+margin_bottom = 640.0
+size_flags_horizontal = 1
+size_flags_vertical = 3
+size_flags_stretch_ratio = 60.0
+
+[node name="GameBoardPos" type="HBoxContainer" parent="UI/HBoxContainer"]
+margin_left = 65.0
+margin_right = 65.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 40.0
+
+[connection signal="pressed" from="UI/HBoxContainer/TimeControls/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="toggled" from="UI/HBoxContainer/TimeControls/PlayButton" to="." method="_on_PlayButton_toggled"]
+[connection signal="toggled" from="UI/HBoxContainer/TimeControls/PlayButton" to="UI/HBoxContainer/TimeControls/PlayButton" method="_on_PlayButton_toggled"]
+[connection signal="pressed" from="UI/HBoxContainer/TimeControls/ForwardButton" to="." method="_on_ForwardButton_pressed"]
+[connection signal="gui_input" from="UI/HBoxContainer/TimeControls/Timeline" to="." method="_on_Timeline_gui_input"]
+[connection signal="value_changed" from="UI/HBoxContainer/TimeControls/Timeline" to="." method="_on_Timeline_value_changed"]

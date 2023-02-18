@@ -1,0 +1,204 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Game/file_upload.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Icons/mm28_icon.png" type="Texture" id=2]
+[ext_resource path="res://UI_Theme.tres" type="Theme" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "close"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rect_scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:rect_scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 1, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rect_rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.5 ),
+"transitions": PoolRealArray( 1 ),
+"update": 3,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
+
+[node name="FileSelect" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FileDialog" type="FileDialog" parent="."]
+margin_right = 481.0
+margin_bottom = 367.0
+window_title = "Open a File"
+mode = 0
+access = 2
+filters = PoolStringArray( "*.txt", "*.json" )
+current_dir = "/Users/dding/Documents/Projects/Godot/MM28"
+current_path = "/Users/dding/Documents/Projects/Godot/MM28/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+margin_right = 282.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 286.0
+margin_right = 993.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.5
+
+[node name="Control" type="Control" parent="HBoxContainer/VBoxContainer"]
+margin_right = 707.0
+margin_bottom = 308.0
+size_flags_vertical = 3
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="HBoxContainer/VBoxContainer"]
+margin_top = 312.0
+margin_right = 707.0
+margin_bottom = 620.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/AspectRatioContainer"]
+margin_left = 199.5
+margin_right = 507.5
+margin_bottom = 308.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="LoadSprite" type="TextureRect" parent="HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer"]
+margin_top = 244.0
+margin_right = 64.0
+margin_bottom = 308.0
+rect_pivot_offset = Vector2( 32, 32 )
+size_flags_vertical = 8
+texture = ExtResource( 2 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer/LoadSprite"]
+playback_speed = 0.5
+anims/close = SubResource( 1 )
+anims/loop = SubResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer"]
+margin_left = 68.0
+margin_right = 308.0
+margin_bottom = 308.0
+size_flags_horizontal = 3
+size_flags_vertical = 9
+alignment = 2
+
+[node name="ProgressText" type="RichTextLabel" parent="HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer/VBoxContainer"]
+margin_top = 275.0
+margin_right = 240.0
+margin_bottom = 290.0
+text = "Okay"
+fit_content_height = true
+scroll_active = false
+
+[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer/VBoxContainer"]
+margin_top = 294.0
+margin_right = 240.0
+margin_bottom = 308.0
+size_flags_vertical = 8
+
+[node name="Control2" type="Control" parent="HBoxContainer/VBoxContainer"]
+margin_top = 624.0
+margin_right = 707.0
+margin_bottom = 640.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
+
+[node name="Control2" type="Control" parent="HBoxContainer"]
+margin_left = 997.0
+margin_right = 1280.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WebUpload" type="Button" parent="CenterContainer"]
+margin_left = 540.0
+margin_top = 295.0
+margin_right = 740.0
+margin_bottom = 345.0
+rect_min_size = Vector2( 200, 50 )
+theme = ExtResource( 3 )
+text = "Upload file"
+
+[connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
+[connection signal="pressed" from="CenterContainer/WebUpload" to="." method="web_load_file"]
