@@ -31,13 +31,16 @@ func nextTurn():
 	turn += 1
 	UI.update_turn_num(turn)
 	$TurnTimer.start(1)
+	var destroyed
 	if ready:
 		T_Map.resetGrid()
 		for i in range(len(actors)):
 			actors[i].moveTo(turns[turn]["characters"][str(i)]["position"])
 			actors[i].setIsZombie(turns[turn]["characters"][str(i)]["isZombie"])
 		for t_key in terrain[turn]:
-			T_Map.setTerrain(terrain[turn][t_key]["imageId"], terrain[turn][t_key]["position"])
+			destroyed = terrain[turn][t_key]["destroyed"]
+			T_Map.setTerrain("" if destroyed else terrain[0][t_key]["imageId"], 
+			terrain[0][t_key]["position"])
 		
 		if turn >= len(turns)-1:
 			UI.force_pause(true)
@@ -46,11 +49,14 @@ func nextTurn():
 
 func jumpToTurn(new_turn):
 	if (ready):
+		var destroyed
 		turn = new_turn
 		UI.update_turn_num(turn)
 		T_Map.resetGrid()
 		for t_key in terrain[turn]:
-			T_Map.setTerrain(terrain[turn][t_key]["imageId"], terrain[turn][t_key]["position"])
+			destroyed = terrain[turn][t_key]["destroyed"]
+			T_Map.setTerrain("" if destroyed else terrain[0][t_key]["imageId"], 
+			terrain[0][t_key]["position"])
 		
 		for i in range(len(actors)):
 			actors[i].instantMoveTo(turns[turn]["characters"][str(i)]["position"])
@@ -113,7 +119,7 @@ func _on_FileDialog_file_selected(path):
 	var file = File.new()
 	file.open(path, File.READ)
 	gamelog = parse_json(file.get_as_text())
-	
+
 	for i in range(gamelog["setup"]["totalCharacters"]):
 		var new_actor = actor.instance()
 		get_parent().add_child(new_actor)
