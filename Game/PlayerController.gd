@@ -29,15 +29,20 @@ func reset():
 
 func nextTurn():
 	turn += 1
-	UI.update_turn_num(turn)
 	$TurnTimer.start(1)
 	if ready:
+		UI.update_turn_num(turn)
+		
+		UI.update_minimap(turns[turn]["characters"])
+		
 		T_Map.resetGrid()
 		for i in range(len(actors)):
 			actors[i].moveTo(turns[turn]["characters"][str(i)]["position"])
 			actors[i].setIsZombie(turns[turn]["characters"][str(i)]["isZombie"])
 		for t_key in terrain[turn]:
-			T_Map.setTerrain(terrain[turn][t_key]["imageId"], terrain[turn][t_key]["position"])
+			if (!terrain[turn][t_key]["destroyed"]):
+				T_Map.setTerrain(terrain[turn][t_key]["imageId"], terrain[turn][t_key]["position"])
+		
 		
 		if turn >= len(turns)-1:
 			UI.force_pause(true)
@@ -48,9 +53,13 @@ func jumpToTurn(new_turn):
 	if (ready):
 		turn = new_turn
 		UI.update_turn_num(turn)
+		
+		UI.update_minimap(turns[turn]["characters"])
+		
 		T_Map.resetGrid()
 		for t_key in terrain[turn]:
-			T_Map.setTerrain(terrain[turn][t_key]["imageId"], terrain[turn][t_key]["position"])
+			if (!terrain[turn][t_key]["destroyed"]):
+				T_Map.setTerrain(terrain[turn][t_key]["imageId"], terrain[turn][t_key]["position"])
 		
 		for i in range(len(actors)):
 			actors[i].instantMoveTo(turns[turn]["characters"][str(i)]["position"])
@@ -138,7 +147,8 @@ func _on_FileDialog_file_selected(path):
 				gamelog["turns"][i]["characters"][str(a)]["isZombie"] = gamelog["turns"][i-1]["characters"][str(a)]["isZombie"]
 	turns = gamelog["turns"]
 	
-
+	var board_size = gamelog["setup"]["boardSize"]
+	T_Map.updateGridSize(board_size)
 
 	for t_key in terrain[0]:
 		T_Map.setTerrain(terrain[turn][t_key]["imageId"], terrain[turn][t_key]["position"])

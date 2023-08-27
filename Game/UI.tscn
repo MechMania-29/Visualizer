@@ -1,22 +1,26 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Game/PlayButton.gd" type="Script" id=1]
 [ext_resource path="res://Game/UI.gd" type="Script" id=2]
+[ext_resource path="res://Assets/minimap_backing.png" type="Texture" id=3]
+[ext_resource path="res://Game/Minimap.gd" type="Script" id=4]
 
 [node name="MarginContainer" type="MarginContainer"]
+anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 65.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 custom_constants/margin_right = 0
 custom_constants/margin_top = 0
 custom_constants/margin_left = 0
 custom_constants/margin_bottom = 0
 script = ExtResource( 2 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="UI" type="VBoxContainer" parent="."]
-margin_right = 65.0
+margin_right = 1280.0
 margin_bottom = 640.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -25,7 +29,7 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI"]
-margin_right = 65.0
+margin_right = 1280.0
 margin_bottom = 640.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -124,15 +128,37 @@ size_flags_stretch_ratio = 60.0
 
 [node name="GameBoardPos" type="HBoxContainer" parent="UI/HBoxContainer"]
 margin_left = 65.0
-margin_right = 65.0
+margin_right = 1076.0
 margin_bottom = 640.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 40.0
 
+[node name="RightSideInfo" type="VBoxContainer" parent="UI/HBoxContainer"]
+margin_left = 1080.0
+margin_right = 1280.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="Minimap" type="TextureRect" parent="UI/HBoxContainer/RightSideInfo"]
+margin_right = 200.0
+margin_bottom = 640.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 3 )
+stretch_mode = 5
+script = ExtResource( 4 )
+
+[connection signal="mouse_entered" from="UI/HBoxContainer/TimeControls/Panel" to="." method="_on_Panel_mouse_entered"]
+[connection signal="mouse_exited" from="UI/HBoxContainer/TimeControls/Panel" to="." method="_on_Panel_mouse_exited"]
 [connection signal="pressed" from="UI/HBoxContainer/TimeControls/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="mouse_entered" from="UI/HBoxContainer/TimeControls/PlayButton" to="." method="_on_PlayButton_mouse_entered"]
+[connection signal="mouse_exited" from="UI/HBoxContainer/TimeControls/PlayButton" to="." method="_on_PlayButton_mouse_exited"]
 [connection signal="toggled" from="UI/HBoxContainer/TimeControls/PlayButton" to="." method="_on_PlayButton_toggled"]
 [connection signal="toggled" from="UI/HBoxContainer/TimeControls/PlayButton" to="UI/HBoxContainer/TimeControls/PlayButton" method="_on_PlayButton_toggled"]
 [connection signal="pressed" from="UI/HBoxContainer/TimeControls/ForwardButton" to="." method="_on_ForwardButton_pressed"]
 [connection signal="gui_input" from="UI/HBoxContainer/TimeControls/Timeline" to="." method="_on_Timeline_gui_input"]
+[connection signal="mouse_entered" from="UI/HBoxContainer/TimeControls/Timeline" to="." method="_on_Timeline_mouse_entered"]
+[connection signal="mouse_exited" from="UI/HBoxContainer/TimeControls/Timeline" to="." method="_on_Timeline_mouse_exited"]
 [connection signal="value_changed" from="UI/HBoxContainer/TimeControls/Timeline" to="." method="_on_Timeline_value_changed"]

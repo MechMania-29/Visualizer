@@ -1,6 +1,6 @@
 extends TileMap
 
-
+var grid_size = 100
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -8,13 +8,15 @@ extends TileMap
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for y in range(0, 100):
-		for x in range(0, 100):
-			set_cell(x, y, 0)
+	resetGrid()
+
+func updateGridSize(new_size):
+	grid_size = new_size
+	resetGrid()
 
 func resetGrid():
-	for y in range(0, 100):
-		for x in range(0, 100):
+	for y in range(0, grid_size):
+		for x in range(0, grid_size):
 			set_cell(x, y, 0)
 
 func setTerrain(terrain_type, pos_dict):

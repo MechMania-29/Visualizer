@@ -5,6 +5,10 @@ signal stepped_forward
 signal stepped_backward
 signal timeline_interaction(clicked)
 
+signal mouse_entered_any
+signal mouse_exited_any
+
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -47,3 +51,28 @@ func _on_Timeline_gui_input(event):
 		emit_signal("timeline_interaction", event.pressed)
 func change_max_turns(turns):
 	$UI/HBoxContainer/TimeControls/Timeline.max_value = turns - 1
+
+
+
+func _on_Timeline_mouse_entered():
+	emit_signal("mouse_entered_any")
+
+func _on_PlayButton_mouse_entered():
+	emit_signal("mouse_entered_any")
+
+func _on_Panel_mouse_entered():
+	emit_signal("mouse_entered_any")
+
+
+func _on_Panel_mouse_exited():
+	emit_signal("mouse_exited_any")
+
+func _on_PlayButton_mouse_exited():
+	emit_signal("mouse_exited_any")
+
+func _on_Timeline_mouse_exited():
+	emit_signal("mouse_exited_any")
+
+func update_minimap(new_map):
+	$UI/HBoxContainer/RightSideInfo/Minimap.board = new_map
+	$UI/HBoxContainer/RightSideInfo/Minimap.update()

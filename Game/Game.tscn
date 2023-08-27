@@ -72,6 +72,7 @@
 script = ExtResource( 12 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2( 5000, 5000 )
 current = true
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -89,21 +90,26 @@ wait_time = 6.0
 
 [node name="Actor" parent="PlayerController" instance=ExtResource( 1 )]
 visible = false
-animation = "zombie"
-
-[node name="FileDialog" type="FileDialog" parent="."]
-margin_right = 1000.0
-margin_bottom = 1000.0
-window_title = "Open a File"
-mode = 0
+animation = "ZW"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource( 4 )]
 visible = false
 
+[node name="FileDialog" type="FileDialog" parent="CanvasLayer"]
+margin_right = 1000.0
+margin_bottom = 1000.0
+window_title = "Open a File"
+mode = 0
+access = 2
+current_dir = "/Users/dding/Documents/Projects/Godot/MM29"
+current_path = "/Users/dding/Documents/Projects/Godot/MM29/"
+
 [connection signal="timeout" from="PlayerController/TurnTimer" to="PlayerController" method="_on_Timer_timeout"]
-[connection signal="file_selected" from="FileDialog" to="PlayerController" method="_on_FileDialog_file_selected"]
+[connection signal="mouse_entered_any" from="CanvasLayer/UI" to="." method="_on_UI_mouse_entered_any"]
+[connection signal="mouse_exited_any" from="CanvasLayer/UI" to="." method="_on_UI_mouse_exited_any"]
 [connection signal="pause_toggled" from="CanvasLayer/UI" to="PlayerController" method="_on_UI_pause_toggled"]
 [connection signal="timeline_changed" from="CanvasLayer/UI" to="PlayerController" method="_on_UI_timeline_changed"]
 [connection signal="timeline_interaction" from="CanvasLayer/UI" to="PlayerController" method="_on_UI_timeline_interaction"]
+[connection signal="file_selected" from="CanvasLayer/FileDialog" to="PlayerController" method="_on_FileDialog_file_selected"]

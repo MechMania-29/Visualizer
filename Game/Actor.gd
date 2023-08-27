@@ -10,10 +10,10 @@ onready var tween = $Tween
 const TILESIZE = 64
 const XOFFSET = 0
 const YOFFSET = 0
-var human = true
+var status = "H"
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.play("human")
+	self.play("HI")
 	pass
 	
 # H = hurt, D = die, AH = Attack horizontally, I = Idle, W = walking
@@ -34,6 +34,7 @@ func moveTo(pos_dict):
 		moveX(x_dist)
 		yield(tween, "tween_completed")
 	#emit_signal("done_moving")
+	self.play(status+"I")
 	
 
 func moveY(y_dist):
@@ -43,7 +44,7 @@ func moveY(y_dist):
 		position, Vector2(self.position.x, y_dist * TILESIZE + self.position.y), y_time, 
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT):
 			tween.start()
-			#self.play(my_color + my_class + "W")
+			self.play(status + "W")
 
 
 func moveX(x_dist):
@@ -53,7 +54,7 @@ func moveX(x_dist):
 		position, Vector2(x_dist * TILESIZE + self.position.x, self.position.y), x_time, 
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT):
 			tween.start()
-			#self.play(my_color + my_class + "W")
+			self.play(status + "W")
 			if x_dist < 0:
 				self.flip_h = true
 			else:
@@ -66,7 +67,7 @@ func instantMoveTo(pos_dict):
 	tween.stop_all()
 
 func attack(target: Vector2):
-	#self.play(my_color + my_class + "AH")
+	self.play(status + "A")
 	if (target.x > self.position.x):
 		self.flip_h = false
 	elif (target.x < self.position.x):
@@ -74,10 +75,10 @@ func attack(target: Vector2):
 
 func setIsZombie(is_zombie):
 	if (is_zombie):
-		self.play("zombie")
+		status = "Z"
 	else:
-		self.play("human")
-	#self.play(my_color + my_class + "I")
+		status = "H"
+	self.play(status + "I")
 	#self.play(my_color + my_class + "H")
 
 func die():
