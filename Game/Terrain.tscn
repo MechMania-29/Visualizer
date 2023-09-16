@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Game/Terrain.gd" type="Script" id=1]
+[ext_resource path="res://Assets/terrain.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 30, 10, 10 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 10, 10, 10 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 10, 10 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 20, 10, 10 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 10, 30, 10, 10 )
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [  ],
+"loop": true,
+"name": "barricade0",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "wall2",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "river-1",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 4 ) ],
+"loop": true,
+"name": "barricade1",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ) ],
+"loop": true,
+"name": "wall3",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ) ],
+"loop": true,
+"name": "tree2",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "wall0",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "wall1",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "tree0",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "river-1fish",
+"speed": 5.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "tree1",
+"speed": 5.0
+} ]
+
+[node name="Terrain" type="AnimatedSprite"]
+frames = SubResource( 1 )
+animation = "tree0"
+centered = false
+script = ExtResource( 1 )
