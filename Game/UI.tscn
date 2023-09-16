@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Game/PlayButton.gd" type="Script" id=1]
 [ext_resource path="res://Game/UI.gd" type="Script" id=2]
 [ext_resource path="res://Assets/minimap_backing.png" type="Texture" id=3]
 [ext_resource path="res://Game/Minimap.gd" type="Script" id=4]
+[ext_resource path="res://new_dynamicfont.tres" type="DynamicFont" id=5]
 
 [node name="MarginContainer" type="MarginContainer"]
 anchor_right = 1.0
@@ -143,12 +144,179 @@ size_flags_stretch_ratio = 2.0
 
 [node name="Minimap" type="TextureRect" parent="UI/HBoxContainer/RightSideInfo"]
 margin_right = 200.0
-margin_bottom = 640.0
+margin_bottom = 200.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 3 )
 stretch_mode = 5
 script = ExtResource( 4 )
+
+[node name="Panel" type="PanelContainer" parent="UI/HBoxContainer/RightSideInfo"]
+margin_top = 204.0
+margin_right = 200.0
+margin_bottom = 439.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/HBoxContainer/RightSideInfo/Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 193.0
+margin_bottom = 228.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScoreLeftBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer"]
+margin_right = 186.0
+margin_bottom = 221.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TBox" type="HBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox"]
+margin_right = 186.0
+margin_bottom = 108.0
+size_flags_vertical = 3
+
+[node name="LBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox"]
+margin_right = 91.0
+margin_bottom = 108.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox/LBox"]
+margin_right = 91.0
+margin_bottom = 31.0
+rect_pivot_offset = Vector2( -1574, 244 )
+custom_colors/font_color = Color( 0.745098, 0.945098, 0.627451, 1 )
+text = "Zombie
+Score:"
+align = 1
+
+[node name="ZScore" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox/LBox"]
+margin_top = 35.0
+margin_right = 91.0
+margin_bottom = 102.0
+custom_colors/font_color = Color( 0.745098, 0.945098, 0.627451, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox"]
+margin_left = 95.0
+margin_right = 186.0
+margin_bottom = 108.0
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox/RBox"]
+margin_right = 91.0
+margin_bottom = 31.0
+custom_colors/font_color = Color( 1, 0.556863, 0.556863, 1 )
+text = "Human
+Score:"
+align = 1
+
+[node name="HScore" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox/RBox"]
+margin_top = 35.0
+margin_right = 91.0
+margin_bottom = 102.0
+custom_colors/font_color = Color( 1, 0.556863, 0.556863, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BBox" type="HBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox"]
+margin_top = 112.0
+margin_right = 186.0
+margin_bottom = 221.0
+size_flags_vertical = 3
+
+[node name="LBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox"]
+margin_right = 91.0
+margin_bottom = 109.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/LBox"]
+margin_right = 91.0
+margin_bottom = 14.0
+rect_pivot_offset = Vector2( -1574, 244 )
+custom_colors/font_color = Color( 0.745098, 0.945098, 0.627451, 1 )
+text = "Zombies Left:"
+align = 1
+
+[node name="ZLeft" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/LBox"]
+margin_top = 18.0
+margin_right = 91.0
+margin_bottom = 85.0
+custom_colors/font_color = Color( 0.745098, 0.945098, 0.627451, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox"]
+margin_left = 95.0
+margin_right = 186.0
+margin_bottom = 109.0
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/RBox"]
+margin_right = 91.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 0.556863, 0.556863, 1 )
+text = "Humans Left:"
+align = 1
+
+[node name="HLeft" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/RBox"]
+margin_top = 18.0
+margin_right = 91.0
+margin_bottom = 85.0
+custom_colors/font_color = Color( 1, 0.556863, 0.556863, 1 )
+custom_fonts/font = ExtResource( 5 )
+text = "0"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InfoPanel" type="PanelContainer" parent="UI/HBoxContainer/RightSideInfo"]
+margin_top = 443.0
+margin_right = 200.0
+margin_bottom = 640.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.5
+
+[node name="IBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/InfoPanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 193.0
+margin_bottom = 190.0
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="Label" type="Label" parent="UI/HBoxContainer/RightSideInfo/InfoPanel/IBox"]
+margin_right = 186.0
+margin_bottom = 14.0
+text = "Info:"
+
+[node name="Coord" type="Label" parent="UI/HBoxContainer/RightSideInfo/InfoPanel/IBox"]
+margin_top = 18.0
+margin_right = 186.0
+margin_bottom = 32.0
+text = "(x,y)"
+
+[node name="Contains" type="Label" parent="UI/HBoxContainer/RightSideInfo/InfoPanel/IBox"]
+margin_top = 36.0
+margin_right = 186.0
+margin_bottom = 50.0
 
 [connection signal="mouse_entered" from="UI/HBoxContainer/TimeControls/Panel" to="." method="_on_Panel_mouse_entered"]
 [connection signal="mouse_exited" from="UI/HBoxContainer/TimeControls/Panel" to="." method="_on_Panel_mouse_exited"]

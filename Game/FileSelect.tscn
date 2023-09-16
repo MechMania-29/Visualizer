@@ -82,13 +82,14 @@ window_title = "Open a File"
 mode = 0
 access = 2
 filters = PoolStringArray( "*.txt", "*.json" )
-current_dir = "/Users/dding/Documents/Projects/Godot/MM28"
-current_path = "/Users/dding/Documents/Projects/Godot/MM28/"
+current_dir = "/Users/dding/Documents/Projects/Godot/MM29"
+current_path = "/Users/dding/Documents/Projects/Godot/MM29/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3

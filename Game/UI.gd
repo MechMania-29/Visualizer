@@ -26,6 +26,9 @@ func _ready():
 func _on_Timeline_value_changed(value):
 	emit_signal("timeline_changed", value)
 
+func _input(event):
+	if event.is_action_pressed("ui_pause"):
+		$UI/HBoxContainer/TimeControls/PlayButton.pressed = !$UI/HBoxContainer/TimeControls/PlayButton.pressed
 
 func _on_PlayButton_toggled(button_pressed):
 	emit_signal("pause_toggled", button_pressed)
@@ -76,3 +79,14 @@ func _on_Timeline_mouse_exited():
 func update_minimap(new_map):
 	$UI/HBoxContainer/RightSideInfo/Minimap.board = new_map
 	$UI/HBoxContainer/RightSideInfo/Minimap.update()
+
+func update_score(zombie_score, human_score):
+	$UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox/LBox/ZScore.text = str(zombie_score)
+	$UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox/RBox/HScore.text = str(human_score)
+func update_num_left(zombies, humans):
+	$UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/LBox/ZLeft.text = str(zombies)
+	$UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/RBox/HLeft.text = str(humans)
+	
+func update_info_box(new_string, coord):
+	$UI/HBoxContainer/RightSideInfo/InfoPanel/IBox/Contains.text = new_string
+	$UI/HBoxContainer/RightSideInfo/InfoPanel/IBox/Coord.text = str(coord)

@@ -6,11 +6,11 @@ signal file_loaded
 
 var GameLog
 onready var FileDia = $FileDialog
-onready var ProgressText = $HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer/VBoxContainer/ProgressText
-onready var ProgressBarNode = $HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer/VBoxContainer/ProgressBar
-onready var Progress = $HBoxContainer
-onready var Anim = $HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer/LoadSprite/AnimationPlayer
-onready var LoadSprite = $HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer/LoadSprite
+#onready var ProgressText = $HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer/VBoxContainer/ProgressText
+#onready var ProgressBarNode = $HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer/VBoxContainer/ProgressBar
+#onready var Progress = $HBoxContainer
+#onready var Anim = $HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer/LoadSprite/AnimationPlayer
+#onready var LoadSprite = $HBoxContainer/VBoxContainer/AspectRatioContainer/HBoxContainer/LoadSprite
 onready var uploadButton = $CenterContainer/WebUpload
 
 var thread = Thread.new()
@@ -20,8 +20,7 @@ onready var dir
 var dirpath = "C:\\Users\\dding\\Desktop\\games"
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	return
-	Progress.hide()
+	#Progress.hide()
 	
 	var _err = Global.connect("progress_text_changed",self,"_on_set_progress_text")
 	_err = Global.connect("progress_changed",self,"_on_set_progress")
@@ -29,16 +28,15 @@ func _ready():
 	_err = Global.connect("gamelog_verification_complete",self,"_on_verification_complete")
 	_err = Global.connect("gamelog_verification_failed",self,"_on_verification_failed")
 	
-	
 	#taking only 
-	if true:
+	if false:
 		dirpath = OS.get_executable_path().get_base_dir()
 		dir = Directory.new()
 		dir.open(dirpath)
 		dir.list_dir_begin()
 		filename = dir.get_next()
 		
-		while (filename == "." or filename == ".." or filename == "MM28.exe" or filename == "MM28.pck"):
+		while (filename == "." or filename == ".." or filename == "MM29.exe" or filename == "MM29.pck"):
 			filename = dir.get_next()
 		print(filename)
 		#get_parent().get_parent().get_node("Filename").text = filename
@@ -65,13 +63,13 @@ func _on_FileDialog_file_selected(path):
 	var file = File.new()
 	file.open(path, file.READ)
 	var json_result = JSON.parse(file.get_as_text())
-	Progress.show()
+	#Progress.show()
 	if json_result.error != OK:
-		Global.progress_text = "Error: invalid file selected, cannot load file."
+		print("FAIL JSON PARSE")
 	else:
 		file.close()
 		GameLog = json_result.result
-		Anim.play("loop")
+		#Anim.play("loop")
 		Global.verify_GameLog(json_result.result)
 		
 	
@@ -82,8 +80,8 @@ func web_load_file():
 	if not Global.use_js:
 		FileDia.show()
 		return
-	Progress.show()
-	ProgressText.text = "Selecting a file..."
+	#Progress.show()
+	#ProgressText.text = "Selecting a file..."
 	# Call our upload function
 	JavaScript.eval("upload();", true)
 	# Wait for prompt to close and for async data load 
@@ -111,12 +109,12 @@ func web_load_file():
 	var gamelog_file = JSON.parse(file_data.get_string_from_utf8())
 	if gamelog_file.error != OK:
 		uploadButton.show()
-		ProgressText.text = "Error: invalid file"
+		#ProgressText.text = "Error: invalid file"
 		return
 	
 	if gamelog_file.result == null:
 		uploadButton.show()
-		ProgressText.text = "Error: invalid file"
+		#ProgressText.text = "Error: invalid file"
 		return
 	
 	GameLog = gamelog_file.result
@@ -129,32 +127,35 @@ func _notification(notification: int):
 
 
 func _on_verification_complete():
-	Anim.get_animation("close").track_set_key_value(2, 0, LoadSprite.rect_rotation + 180)
-	Anim.play("close")
-	yield(get_tree().create_timer(1),"timeout")
-	emit_signal("file_loaded", Global.GameLog, Global.Names)
-	Progress.hide()
+	#Anim.get_animation("close").track_set_key_value(2, 0, LoadSprite.rect_rotation + 180)
+	#Anim.play("close")
+	emit_signal("file_loaded", Global.GameLog, Global.Terrain)
+	#Progress.hide()
 	self.hide()
 	
 
 func _on_verification_failed():
-	ProgressText.text = "Error: " + ProgressText.text
-	Progress.show()
+	print("A")
+	#ProgressText.text = "Error: " + ProgressText.text
+	#Progress.show()
 	uploadButton.show()
 	
 
 func _on_verification_start():
-	ProgressBarNode.max_value = Global.max_progress
+	#ProgressBarNode.max_value = Global.max_progress
 	uploadButton.hide()
 
 func _on_set_progress_text(new : String):
-	ProgressText.text = new
+	#ProgressText.text = new
+	pass
 
 func _on_set_progress(new : float):
-	ProgressBarNode.value = new
+	#ProgressBarNode.value = new
+	pass
 
 # Pressing esc will open file select
 func _unhandled_key_input(event):
+	return
 	if event.is_action_released("ui_cancel"):
 		popup()
 
@@ -215,12 +216,12 @@ func _exit_tree():
 
 
 func _on_PlayerController_restart():
+	return
 	dir.list_dir_end()
 	dir.list_dir_begin(true, true)
 	filename = dir.get_next()
-	while (filename == "MM28.exe" or filename == "MM28.pck"):
+	while (filename == "MM29.exe" or filename == "MM29.pck"):
 		filename = dir.get_next()
 	if (filename != ""):
-		print(filename)
 		#get_parent().get_parent().get_node("Filename").text = filename
 		_on_FileDialog_file_selected(filename)

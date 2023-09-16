@@ -7,13 +7,14 @@ extends AnimatedSprite
 # var b = "text"
 
 onready var tween = $Tween
-const TILESIZE = 64
-const XOFFSET = 0
-const YOFFSET = 0
-var status = "H"
+const TILESIZE = Global.BOARD_TILESIZE
+const XOFFSET = Global.BOARD_X_OFFSET
+const YOFFSET = Global.BOARD_Y_OFFSET
+var status = "N"
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.play("HI")
+	self.material = self.material.duplicate()
+	self.play(status + "I")
 	pass
 	
 # H = hurt, D = die, AH = Attack horizontally, I = Idle, W = walking
@@ -21,6 +22,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
 
 func moveTo(pos_dict):
 	var new_pos = [pos_dict['x'], pos_dict['y']]
@@ -36,7 +38,7 @@ func moveTo(pos_dict):
 	#emit_signal("done_moving")
 	self.play(status+"I")
 	
-
+# NOTE: y_dist refers to distance in tiles
 func moveY(y_dist):
 	var y_time = .05
 	
@@ -44,9 +46,8 @@ func moveY(y_dist):
 		position, Vector2(self.position.x, y_dist * TILESIZE + self.position.y), y_time, 
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT):
 			tween.start()
-			self.play(status + "W")
 
-
+# NOTE: x_dist refers to distance in tiles
 func moveX(x_dist):
 	var x_time = .05
 	
@@ -54,7 +55,6 @@ func moveX(x_dist):
 		position, Vector2(x_dist * TILESIZE + self.position.x, self.position.y), x_time, 
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT):
 			tween.start()
-			self.play(status + "W")
 			if x_dist < 0:
 				self.flip_h = true
 			else:
@@ -73,21 +73,37 @@ func attack(target: Vector2):
 	elif (target.x < self.position.x):
 		self.flip_h = true
 
+func setClass(cl):
+	status = cl
+	self.play(cl+"I")
+
 func setIsZombie(is_zombie):
 	if (is_zombie):
 		status = "Z"
 	else:
-		status = "H"
+		status = "N"
 	self.play(status + "I")
 	#self.play(my_color + my_class + "H")
 
-func die():
-	pass
-	#self.play(my_color + my_class + "D")
+func hurt():
+	self.material.set_shader_param("enabled", true)
+	yield(get_tree().create_timer(1),"timeout")
+	self.material.set_shader_param("enabled", false)
+	if (status == "Z"):
+		self.play("ZS")
 
-func use():
-	#self.play(my_color + my_class + "IT")
-	pass
+func stun(is_stunned):
+	if (is_stunned):
+		self.play("ZS")
+	else:
+		(self.play("ZI"))
+
+func die():
+	self.play(status + "D")
+
+func ability():
+	if (status == "Me" || status == "B"):
+		self.play(status + "A")
 
 
 func _on_Tween_tween_completed(object, key):

@@ -1,11 +1,11 @@
-extends TileMap
+extends Sprite
 
 var grid_size = 100
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-
-
+onready var terrain_sprite = preload("res://Game/Terrain.tscn")
+var terrain_dict = {}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	resetGrid()
@@ -15,19 +15,24 @@ func updateGridSize(new_size):
 	resetGrid()
 
 func resetGrid():
-	for y in range(0, grid_size):
-		for x in range(0, grid_size):
-			set_cell(x, y, 0)
+	for pos in terrain_dict:
+		terrain_dict[pos].hide()
 
-func setTerrain(terrain_type, pos_dict):
-	var cell = 0
-	if (terrain_type == "building"):
-		cell = 1
-	elif (terrain_type == "rock"):
-		cell = 2
-	elif (terrain_type == "tree"):
-		cell = 3
-	set_cell(pos_dict["x"], pos_dict["y"], cell)
+#TODO update with new terrains
+func setTerrain(terrain_type, health, pos_dict):
+	var pos = Vector2(pos_dict['x'], pos_dict['y'])
+	if !terrain_dict.has(pos):
+		var new_terrain = terrain_sprite.instance()
+		new_terrain.position = pos * Global.BOARD_TILESIZE
+		self.add_child(new_terrain)
+		terrain_dict[pos] = new_terrain
+	terrain_dict[pos].set_status(terrain_type, health)
+
+func getTerrain(pos):
+	if !terrain_dict.has(pos):
+		return null
+	else:
+		return terrain_dict[pos].get_status()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
