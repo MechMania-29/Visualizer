@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Game/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Game/Terrain.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Game/PlayerController.gd" type="Script" id=3]
 [ext_resource path="res://Game/UI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/board.png" type="Texture" id=5]
+[ext_resource path="res://Assets/highlight.png" type="Texture" id=6]
 [ext_resource path="res://Game/Map.gd" type="Script" id=7]
 [ext_resource path="res://Game/FileSelect.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Game/Game.gd" type="Script" id=12]
@@ -23,6 +24,7 @@ offset = Vector2( -41, -40 )
 script = ExtResource( 7 )
 
 [node name="Terrain" parent="TileMap" instance=ExtResource( 2 )]
+animation = "riverfish-1"
 
 [node name="PlayerController" type="Node2D" parent="."]
 script = ExtResource( 3 )
@@ -40,6 +42,11 @@ animation = "ZS"
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource( 4 )]
 visible = false
+
+[node name="Highlight" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.356863 )
+texture = ExtResource( 6 )
+centered = false
 
 [connection signal="timeout" from="PlayerController/TurnTimer" to="PlayerController" method="_on_Timer_timeout"]
 [connection signal="file_loaded" from="CanvasLayer/FileSelect" to="PlayerController" method="_on_FileSelect_file_loaded"]

@@ -3,6 +3,7 @@ extends Node
 const BOARD_TILESIZE = 10
 const BOARD_X_OFFSET = 0
 const BOARD_Y_OFFSET = 0
+const TOTAL_TURN_TIME = 1.0
 
 signal gamelog_verification_start
 signal gamelog_verification_complete
@@ -66,7 +67,7 @@ func verify_GameLog(_gamelog):
 	# populate terrain
 	for i in range(GameLog["stats"]["turns"]+1):
 		if (i > 0):
-			Terrain.append(Terrain[i-1].duplicate())
+			Terrain.append(Terrain[i-1].duplicate(true))
 		else:
 			Terrain.append({})
 		for t_key in GameLog["turns"][i]["terrain"]:
@@ -75,7 +76,6 @@ func verify_GameLog(_gamelog):
 					Terrain[i][t_key][update_key] = GameLog["turns"][i]["terrain"][t_key][update_key]
 			else:
 				Terrain[i][t_key] = GameLog["turns"][i]["terrain"][t_key]
-	
 	# populate characters
 	for i in range(1, len(GameLog["turns"])):
 		for a in range(GameLog["setup"]["totalCharacters"]):

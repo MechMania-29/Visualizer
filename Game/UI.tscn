@@ -36,15 +36,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 16.0
 
-[node name="LeftSideInfo" type="VBoxContainer" parent="UI/HBoxContainer"]
-margin_bottom = 640.0
-size_flags_horizontal = 11
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.0
-
 [node name="TimeControls" type="VBoxContainer" parent="UI/HBoxContainer"]
-margin_left = 4.0
-margin_right = 61.0
+margin_right = 57.0
 margin_bottom = 640.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -127,65 +120,81 @@ size_flags_horizontal = 1
 size_flags_vertical = 3
 size_flags_stretch_ratio = 60.0
 
+[node name="LeftSideInfo" type="VBoxContainer" parent="UI/HBoxContainer"]
+margin_left = 61.0
+margin_right = 61.0
+margin_bottom = 640.0
+size_flags_horizontal = 11
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+
+[node name="Errors" type="Label" parent="UI/HBoxContainer/LeftSideInfo"]
+margin_bottom = 640.0
+size_flags_vertical = 7
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+valign = 2
+
 [node name="GameBoardPos" type="HBoxContainer" parent="UI/HBoxContainer"]
 margin_left = 65.0
-margin_right = 1076.0
+margin_right = 1033.0
 margin_bottom = 640.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 40.0
 
 [node name="RightSideInfo" type="VBoxContainer" parent="UI/HBoxContainer"]
-margin_left = 1080.0
+margin_left = 1037.0
 margin_right = 1280.0
 margin_bottom = 640.0
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.0
+size_flags_stretch_ratio = 10.0
 
 [node name="Minimap" type="TextureRect" parent="UI/HBoxContainer/RightSideInfo"]
-margin_right = 200.0
+margin_right = 243.0
 margin_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 3 )
-stretch_mode = 5
+stretch_mode = 6
 script = ExtResource( 4 )
 
 [node name="Panel" type="PanelContainer" parent="UI/HBoxContainer/RightSideInfo"]
 margin_top = 204.0
-margin_right = 200.0
-margin_bottom = 439.0
+margin_right = 243.0
+margin_bottom = 420.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/HBoxContainer/RightSideInfo/Panel"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 193.0
-margin_bottom = 228.0
+margin_right = 236.0
+margin_bottom = 209.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ScoreLeftBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer"]
-margin_right = 186.0
-margin_bottom = 221.0
+margin_right = 229.0
+margin_bottom = 202.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="TBox" type="HBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox"]
-margin_right = 186.0
-margin_bottom = 108.0
+margin_right = 229.0
+margin_bottom = 102.0
 size_flags_vertical = 3
 
 [node name="LBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox"]
-margin_right = 91.0
-margin_bottom = 108.0
+margin_right = 112.0
+margin_bottom = 102.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox/LBox"]
-margin_right = 91.0
+margin_right = 112.0
 margin_bottom = 31.0
 rect_pivot_offset = Vector2( -1574, 244 )
 custom_colors/font_color = Color( 0.745098, 0.945098, 0.627451, 1 )
@@ -195,7 +204,7 @@ align = 1
 
 [node name="ZScore" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox/LBox"]
 margin_top = 35.0
-margin_right = 91.0
+margin_right = 112.0
 margin_bottom = 102.0
 custom_colors/font_color = Color( 0.745098, 0.945098, 0.627451, 1 )
 custom_fonts/font = ExtResource( 5 )
@@ -206,13 +215,13 @@ __meta__ = {
 }
 
 [node name="RBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox"]
-margin_left = 95.0
-margin_right = 186.0
-margin_bottom = 108.0
+margin_left = 116.0
+margin_right = 229.0
+margin_bottom = 102.0
 size_flags_horizontal = 3
 
 [node name="Label2" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox/RBox"]
-margin_right = 91.0
+margin_right = 113.0
 margin_bottom = 31.0
 custom_colors/font_color = Color( 1, 0.556863, 0.556863, 1 )
 text = "Human
@@ -221,7 +230,7 @@ align = 1
 
 [node name="HScore" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox/RBox"]
 margin_top = 35.0
-margin_right = 91.0
+margin_right = 113.0
 margin_bottom = 102.0
 custom_colors/font_color = Color( 1, 0.556863, 0.556863, 1 )
 custom_fonts/font = ExtResource( 5 )
@@ -232,18 +241,18 @@ __meta__ = {
 }
 
 [node name="BBox" type="HBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox"]
-margin_top = 112.0
-margin_right = 186.0
-margin_bottom = 221.0
+margin_top = 106.0
+margin_right = 229.0
+margin_bottom = 202.0
 size_flags_vertical = 3
 
 [node name="LBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox"]
-margin_right = 91.0
-margin_bottom = 109.0
+margin_right = 112.0
+margin_bottom = 96.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/LBox"]
-margin_right = 91.0
+margin_right = 112.0
 margin_bottom = 14.0
 rect_pivot_offset = Vector2( -1574, 244 )
 custom_colors/font_color = Color( 0.745098, 0.945098, 0.627451, 1 )
@@ -252,7 +261,7 @@ align = 1
 
 [node name="ZLeft" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/LBox"]
 margin_top = 18.0
-margin_right = 91.0
+margin_right = 112.0
 margin_bottom = 85.0
 custom_colors/font_color = Color( 0.745098, 0.945098, 0.627451, 1 )
 custom_fonts/font = ExtResource( 5 )
@@ -263,13 +272,13 @@ __meta__ = {
 }
 
 [node name="RBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox"]
-margin_left = 95.0
-margin_right = 186.0
-margin_bottom = 109.0
+margin_left = 116.0
+margin_right = 229.0
+margin_bottom = 96.0
 size_flags_horizontal = 3
 
 [node name="Label2" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/RBox"]
-margin_right = 91.0
+margin_right = 113.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 1, 0.556863, 0.556863, 1 )
 text = "Humans Left:"
@@ -277,7 +286,7 @@ align = 1
 
 [node name="HLeft" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/RBox"]
 margin_top = 18.0
-margin_right = 91.0
+margin_right = 113.0
 margin_bottom = 85.0
 custom_colors/font_color = Color( 1, 0.556863, 0.556863, 1 )
 custom_fonts/font = ExtResource( 5 )
@@ -288,34 +297,34 @@ __meta__ = {
 }
 
 [node name="InfoPanel" type="PanelContainer" parent="UI/HBoxContainer/RightSideInfo"]
-margin_top = 443.0
-margin_right = 200.0
+margin_top = 424.0
+margin_right = 243.0
 margin_bottom = 640.0
 size_flags_vertical = 3
-size_flags_stretch_ratio = 2.5
+size_flags_stretch_ratio = 3.0
 
 [node name="IBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/InfoPanel"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 193.0
-margin_bottom = 190.0
+margin_right = 236.0
+margin_bottom = 209.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 
 [node name="Label" type="Label" parent="UI/HBoxContainer/RightSideInfo/InfoPanel/IBox"]
-margin_right = 186.0
+margin_right = 229.0
 margin_bottom = 14.0
 text = "Info:"
 
 [node name="Coord" type="Label" parent="UI/HBoxContainer/RightSideInfo/InfoPanel/IBox"]
 margin_top = 18.0
-margin_right = 186.0
+margin_right = 229.0
 margin_bottom = 32.0
 text = "(x,y)"
 
 [node name="Contains" type="Label" parent="UI/HBoxContainer/RightSideInfo/InfoPanel/IBox"]
 margin_top = 36.0
-margin_right = 186.0
+margin_right = 229.0
 margin_bottom = 50.0
 
 [connection signal="mouse_entered" from="UI/HBoxContainer/TimeControls/Panel" to="." method="_on_Panel_mouse_entered"]

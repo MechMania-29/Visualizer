@@ -11,6 +11,8 @@ onready var UI = $"../CanvasLayer/UI"
 onready var T_Map = $"../TileMap"
 onready var actor = preload("res://Game/Player.tscn")
 
+var turn_time = Global.TOTAL_TURN_TIME
+
 var turn = 0
 var gamelog
 var turns
@@ -36,10 +38,15 @@ func updateInfoCoord(target):
 				str_out += "Zombie"
 				if (character_dict[str(i)]['isStunned']):
 					str_out += ", stunned"
+				if (actors[i].converting):
+					str_out += ", converting"
 			else:
 				str_out += "Human, "
 				# add class here
+				str_out += character_dict[str(i)]['class'].capitalize() +", "
 				str_out += str(character_dict[str(i)]['health']) + " health"
+			# remove this for launch
+			str_out += ", id: " + str(i)
 			str_out += "\n"
 	
 	var terr = $"../TileMap".getTerrain(info_coord)
@@ -48,6 +55,7 @@ func updateInfoCoord(target):
 			str_out += terr[0]
 		else:
 			str_out += terr[0] + ", " + str(terr[1]) + " health"
+		str_out += ", id: " + str(terr[2])
 	
 	UI.update_info_box(str_out, info_coord)
 
@@ -59,49 +67,74 @@ func reset():
 
 func nextTurn():
 	turn += 1
-	$TurnTimer.start(1)
+	$TurnTimer.start(turn_time)
 	if ready:
 		UI.update_turn_num(turn)
-		#print(terrain[turn])
-		
-		UI.update_minimap(turns[turn]["characters"])
-		
-		T_Map.resetGrid()
-		
+		updateInfoCoord(null)
 		var character_dict = turns[turn]["characters"]
+		
+		# Moving
+		for i in range(len(actors)):
+			actors[i].resetArrows()
+			if (character_dict[str(i)]["isZombie"]):
+				if (turn >= 2 and turns[turn-2]["characters"][str(i)]["isZombie"]):
+					actors[i].setIsZombie(true, false)
+				if (character_dict[str(i)]["isStunned"]):
+					actors[i].stun(true)
+			actors[i].moveTo(character_dict[str(i)]["position"])
+		UI.update_minimap(turns[turn]["characters"])
+		yield(get_tree().create_timer(turn_time/3), "timeout")
+			
+		# Attacking
 		var zleft = 0
 		var hleft = 0
 		for i in range(len(actors)):
-			actors[i].moveTo(character_dict[str(i)]["position"])
 			if character_dict[str(i)]["isZombie"]:
-				zleft+=1
+				zleft += 1
 			else:
-				hleft+=1
-			actors[i].setIsZombie(character_dict[str(i)]["isZombie"])
+				hleft += 1
 			if character_dict[str(i)].has("attackAction") and character_dict[str(i)]["attackAction"] != null:
 				var attackedID = character_dict[str(i)]["attackAction"]["attackingId"]
-				
 				if character_dict[str(i)]["attackAction"]["type"] == "TERRAIN": 
-					#print(terrain[turn][attackedID], attackedID)
 					var pos = Vector2(terrain[turn][attackedID]["position"]["x"], terrain[turn][attackedID]["position"]["y"])
+					if actors[i].my_class == "DEMOLITIONIST":
+						$"../TileMap".hurtTerrain(pos, 3, attackedID)
+					else:
+						$"../TileMap".hurtTerrain(pos, 1, attackedID)
 					pos.x = pos.x*Global.BOARD_TILESIZE + Global.BOARD_X_OFFSET
 					pos.y = pos.y*Global.BOARD_TILESIZE + Global.BOARD_Y_OFFSET
 					actors[i].attack(pos)
 				elif character_dict[str(i)]["attackAction"]["type"] == "CHARACTER":
 					actors[i].attack(actors[int(attackedID)].position)
-					if character_dict[attackedID]["health"] == 0:
+					if character_dict[str(i)]["isZombie"] and character_dict[attackedID]["isZombie"]:
 						actors[int(attackedID)].die()
 					else:
 						actors[int(attackedID)].hurt()
-		
 		UI.update_num_left(zleft, hleft)
-		updateInfoCoord(null)
+		yield(get_tree().create_timer(turn_time/4), "timeout")
 		
+		# Abilities and finish attacks
+		for i in range(len(actors)):
+			actors[i].resetArrows()
+			if character_dict[str(i)].has("abilityAction") and character_dict[str(i)]["abilityAction"] != null:
+				var ability = character_dict[str(i)]["abilityAction"]
+				if (ability["type"] == "HEAL"):
+					actors[i].ability(actors[int(ability["characterIdTarget"])].position)
+				elif (ability["type"] == "BUILD_BARRICADE"):
+					var pos = Vector2(ability["positionalTarget"]["x"], ability["positionalTarget"]["y"]) * Global.BOARD_TILESIZE
+					actors[i].ability(pos)
+		
+		# ensure terrain is correct
 		for t_key in terrain[turn]:
-			if (!terrain[turn][t_key]["destroyed"]):
-				T_Map.setTerrain(terrain[turn][t_key]["imageId"], terrain[turn][t_key]["health"], terrain[turn][t_key]["position"])
+			var terr_info = terrain[turn][t_key]
+			var t_health = 0
+			if (!terr_info["destroyed"]):
+				t_health = terr_info["health"]
+			T_Map.setTerrain(terr_info["imageId"], terr_info["health"], terr_info["position"], t_key)
 		
-		
+		yield(get_tree().create_timer(turn_time/4), "timeout")
+		for i in range(len(actors)):
+			actors[i].resetArrows()
 		
 		if turn >= len(turns)-1:
 			UI.force_pause(true)
@@ -117,22 +150,49 @@ func jumpToTurn(new_turn):
 		
 		T_Map.resetGrid()
 		for t_key in terrain[turn]:
+			var t_health = 0
 			if (!terrain[turn][t_key]["destroyed"]):
-				T_Map.setTerrain(terrain[turn][t_key]["imageId"], terrain[turn][t_key]["health"], terrain[turn][t_key]["position"])
+				t_health = terrain[turn][t_key]["health"]
+			T_Map.setTerrain(terrain[turn][t_key]["imageId"], t_health, terrain[turn][t_key]["position"], t_key)
 		
+		var character_dict = turns[turn]["characters"]
 		var zleft = 0
 		var hleft = 0
 		for i in range(len(actors)):
-			actors[i].instantMoveTo(turns[turn]["characters"][str(i)]["position"])
-			actors[i].setIsZombie(turns[turn]["characters"][str(i)]["isZombie"])
-			if turns[turn]["characters"][str(i)]["isZombie"]:
+			actors[i].instantMoveTo(character_dict[str(i)]["position"])
+			if (character_dict[str(i)]["isZombie"]):
+				if (turn >= 1 and !turns[turn-1]["characters"][str(i)]["isZombie"]):
+					actors[i].die()
+				elif (turn >= 2 and !turns[turn-2]["characters"][str(i)]["isZombie"]):
+					actors[i].die()
+				else:
+					actors[i].setIsZombie(true)
 				zleft+=1
 			else:
+				actors[i].setIsZombie(false)
 				hleft+=1
-			if (turns[turn]["characters"][str(i)]["isZombie"]):
-				actors[i].stun(turns[turn]["characters"][str(i)]["isStunned"])
-			elif (turns[turn]["characters"][str(i)]["health"] == 0):
-				actors[i].die()
+			actors[i].stun(character_dict[str(i)]["isStunned"])
+			
+			actors[i].resetArrows()
+			if character_dict[str(i)].has("abilityAction") and character_dict[str(i)]["abilityAction"] != null:
+				var ability = character_dict[str(i)]["abilityAction"]
+				if (ability["type"] == "HEAL"):
+					actors[i].ability(actors[int(ability["characterIdTarget"])].position)
+				elif (ability["type"] == "BUILD_BARRICADE"):
+					var pos = Vector2(ability["positionalTarget"]["x"], ability["positionalTarget"]["y"]) * Global.BOARD_TILESIZE
+					actors[i].ability(pos)
+			
+			if character_dict[str(i)].has("attackAction") and character_dict[str(i)]["attackAction"] != null:
+				var attackedID = character_dict[str(i)]["attackAction"]["attackingId"]
+				if character_dict[str(i)]["attackAction"]["type"] == "TERRAIN": 
+					var pos = Vector2(terrain[turn][attackedID]["position"]["x"], terrain[turn][attackedID]["position"]["y"])
+					pos.x = pos.x*Global.BOARD_TILESIZE + Global.BOARD_X_OFFSET
+					pos.y = pos.y*Global.BOARD_TILESIZE + Global.BOARD_Y_OFFSET
+					actors[i].attack(pos)
+				elif character_dict[str(i)]["attackAction"]["type"] == "CHARACTER":
+					actors[i].attack(actors[int(attackedID)].position)
+			
+			
 		UI.update_num_left(zleft, hleft)
 		updateInfoCoord(null)
 		
@@ -199,46 +259,27 @@ func startup(new_gamelog, new_terrain):
 		get_parent().add_child(new_actor)
 		actors.push_back(new_actor)
 	
-	# populate terrain
-	if false:
-		for i in range(gamelog["stats"]["turns"]+1):
-			if (i > 0):
-				terrain.append(terrain[i-1].duplicate())
-			else:
-				terrain.append({})
-			for t_key in gamelog["turns"][i]["terrain"]:
-				if terrain[i].has(t_key):
-					for update_key in gamelog["turns"][i]["terrain"][t_key]:
-						terrain[i][t_key][update_key] = gamelog["turns"][i]["terrain"][t_key][update_key]
-				else:
-					terrain[i][t_key] = gamelog["turns"][i]["terrain"][t_key]
-	
-	# populate characters
-	if false:
-		for i in range(1, len(gamelog["turns"])):
-			for a in range(len(actors)):
-				if (!gamelog["turns"][i]["characters"].has(str(a))):
-					gamelog["turns"][i]["characters"][str(a)] = {}
-				for c_key in gamelog["turns"][i-1]["characters"][str(a)]:
-					if (!gamelog["turns"][i]["characters"][str(a)].has(c_key)):
-						gamelog["turns"][i]["characters"][str(a)][c_key] = gamelog["turns"][i-1]["characters"][str(a)][c_key]
-			#	if (!gamelog["turns"][i]["characters"][str(a)].has("isZombie")):
-			#		gamelog["turns"][i]["characters"][str(a)]["isZombie"] = gamelog["turns"][i-1]["characters"][str(a)]["isZombie"]
-	turns = gamelog["turns"]
-	
 	var board_size = gamelog["setup"]["boardSize"]
 	T_Map.updateGridSize(board_size)
 
 	for t_key in terrain[0]:
-		T_Map.setTerrain(terrain[turn][t_key]["imageId"], terrain[turn][t_key]["health"], terrain[turn][t_key]["position"])
+		T_Map.setTerrain(terrain[turn][t_key]["imageId"], terrain[turn][t_key]["health"], terrain[turn][t_key]["position"], t_key)
 	
+	turns = gamelog["turns"]
 	for i in range(gamelog["setup"]["totalCharacters"]):
 		actors[i].instantMoveTo(gamelog["turns"][0]["characters"][str(i)]["position"])
 		actors[i].setIsZombie(gamelog["turns"][0]["characters"][str(i)]["isZombie"])
+		actors[i].setClass(gamelog["turns"][0]["characters"][str(i)]["class"])
 	
 	# Set up UI
 	UI.change_max_turns(gamelog["stats"]["turns"])
 	UI.update_score(gamelog["scores"]["zombies"], gamelog["scores"]["humans"])
+	var err_str = ""
+	for err in gamelog["errors"]["humanErrors"]:
+		err_str += err + "\n"
+	for err in gamelog["errors"]["zombieErrors"]:
+		err_str += err + "\n"
+	UI.log_error(err_str)
 	#UI.update_num_left(gamelog["stats"]["zombiesLeft"], gamelog["stats"]["humansLeft"])
 	UI.show()
 	
@@ -247,9 +288,4 @@ func startup(new_gamelog, new_terrain):
 
 
 func _on_FileSelect_file_loaded(GameLog, Terrain):
-	#var save_game = File.new()
-	#save_game.open("user://savegame2.save", File.WRITE)
-	#save_game.store_line(str(GameLog))
-	#save_game.close()
-	
 	startup(GameLog, Terrain)

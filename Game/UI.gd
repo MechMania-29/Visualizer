@@ -90,3 +90,6 @@ func update_num_left(zombies, humans):
 func update_info_box(new_string, coord):
 	$UI/HBoxContainer/RightSideInfo/InfoPanel/IBox/Contains.text = new_string
 	$UI/HBoxContainer/RightSideInfo/InfoPanel/IBox/Coord.text = str(coord)
+
+func log_error(err):
+	$UI/HBoxContainer/LeftSideInfo/Errors.text = err

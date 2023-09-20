@@ -16,23 +16,33 @@ func updateGridSize(new_size):
 
 func resetGrid():
 	for pos in terrain_dict:
-		terrain_dict[pos].hide()
+		for id in terrain_dict[pos]:
+			terrain_dict[pos][id].hide()
 
-#TODO update with new terrains
-func setTerrain(terrain_type, health, pos_dict):
+func setTerrain(terrain_type, health, pos_dict, id):
 	var pos = Vector2(pos_dict['x'], pos_dict['y'])
 	if !terrain_dict.has(pos):
+		terrain_dict[pos] = {}
+	if !terrain_dict[pos].has(id):
 		var new_terrain = terrain_sprite.instance()
 		new_terrain.position = pos * Global.BOARD_TILESIZE
 		self.add_child(new_terrain)
-		terrain_dict[pos] = new_terrain
-	terrain_dict[pos].set_status(terrain_type, health)
+		terrain_dict[pos][id] = new_terrain
+	terrain_dict[pos][id].set_status(terrain_type, health, id)
+
+func hurtTerrain(pos, damage, id):
+	if !terrain_dict.has(pos) or !terrain_dict[pos].has(id):
+		return
+	terrain_dict[pos][id].hurt(damage)
 
 func getTerrain(pos):
 	if !terrain_dict.has(pos):
 		return null
 	else:
-		return terrain_dict[pos].get_status()
+		for id in terrain_dict[pos]:
+			if (terrain_dict[pos][id].health != 0):
+				return terrain_dict[pos][id].get_status()
+	return null
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Green.png-90a1aed5b92a8b994ee438415ec30aa0.stex"
+path="res://.import/highlight.png-ea7349ff5524c20f6d3aec672b811539.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Player Sprites/Green.png"
-dest_files=[ "res://.import/Green.png-90a1aed5b92a8b994ee438415ec30aa0.stex" ]
+source_file="res://Assets/highlight.png"
+dest_files=[ "res://.import/highlight.png-ea7349ff5524c20f6d3aec672b811539.stex" ]
 
 [params]
 

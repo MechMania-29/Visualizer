@@ -55,9 +55,7 @@ func _input(ev):
 		var pos = (get_global_mouse_position()/10).floor()
 		if (pos.x < 100 and pos.x >= 0 and pos.y < 100 and pos.y >= 0):
 			$PlayerController.updateInfoCoord(pos)
-		
-	
-	
+			$Highlight.position = pos*10
 
 
 func _on_UI_mouse_entered_any():
