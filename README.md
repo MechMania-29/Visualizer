@@ -14,15 +14,19 @@ This allows you to view what's actually going on it your games and adjust your b
 ---
 
 # Installation
-Either download the latest release and run the .exe, or visit the visualizer website. We recommend you use the website.
 
-# Controls
+We provide the visualizer on the mechmania website. You should be able to use that without having to install anything.
+
+If you encounter issues, you can install the visualizer manually by downloading [the latest release](https://github.com/MechMania-29/Visualizer/releases) and run the .exe.
+
+# Usage
+## Controls
   ##### Keyboard controls
   Use WASD or the arrow keys to pan the camera, and use R to zoom in, and F to zoom out. Press space to pause and unpause the simulation.
   ##### Mouse controls
   Left click and drag to pan the camera. Scroll to zoom in and out. Right click to select a square for more information.
 
-# Game Board
+## Game Board
 ![diagram](https://github.com/MechMania-29/Visualizer/assets/90988235/d4e32f30-5923-4e9d-98be-bf9909ca9281)
 
  1. This is the timeline, which displays which turn it is, and offers another way to pause and play the simulation. Click and drag the timeline to quickly view another turn.
