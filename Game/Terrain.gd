@@ -8,6 +8,22 @@ var type = "river"
 var health = -1
 var id = "err"
 var has_fish = false
+
+const max_healths = {
+	"river" : 1.0,
+	"riverfish" : 1.0,
+	"barricade" : 1.0,
+	"tree" : 2.0,
+	"wall" : 3.0
+}
+
+const sprite_health_states = {
+	"river" : 1.0,
+	"riverfish" : 1.0,
+	"barricade" : 1.0,
+	"tree" : 2.0,
+	"wall" : 3.0
+}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if (randi() % 20 == 0):
@@ -22,6 +38,7 @@ func set_status(new_type, new_health, new_id=null):
 	type = new_type
 	if (type == "river" and has_fish):
 		type = "riverfish"
+	var eff_health = ceil(health / max_healths[type] * sprite_health_states[type])
 	play(type+str(health))
 	show()
 

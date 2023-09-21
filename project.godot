@@ -12,7 +12,6 @@ config_version=4
 
 config/name="MechMania29"
 run/main_scene="res://Game/Game.tscn"
-config/icon="res://icon.png"
 
 [autoload]
 

@@ -24,6 +24,7 @@ offset = Vector2( -41, -40 )
 script = ExtResource( 7 )
 
 [node name="Terrain" parent="TileMap" instance=ExtResource( 2 )]
+visible = false
 animation = "riverfish-1"
 
 [node name="PlayerController" type="Node2D" parent="."]

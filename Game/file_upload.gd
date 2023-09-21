@@ -135,7 +135,7 @@ func _on_verification_complete():
 	
 
 func _on_verification_failed():
-	print("A")
+	print("Failed")
 	#ProgressText.text = "Error: " + ProgressText.text
 	#Progress.show()
 	uploadButton.show()

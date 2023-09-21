@@ -4,7 +4,7 @@
 [ext_resource path="res://Game/UI.gd" type="Script" id=2]
 [ext_resource path="res://Assets/minimap_backing.png" type="Texture" id=3]
 [ext_resource path="res://Game/Minimap.gd" type="Script" id=4]
-[ext_resource path="res://new_dynamicfont.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Assets/new_dynamicfont.tres" type="DynamicFont" id=5]
 
 [node name="MarginContainer" type="MarginContainer"]
 anchor_right = 1.0
@@ -163,22 +163,21 @@ script = ExtResource( 4 )
 [node name="Panel" type="PanelContainer" parent="UI/HBoxContainer/RightSideInfo"]
 margin_top = 204.0
 margin_right = 243.0
-margin_bottom = 420.0
+margin_bottom = 409.0
 size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/HBoxContainer/RightSideInfo/Panel"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 236.0
-margin_bottom = 209.0
+margin_bottom = 198.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ScoreLeftBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer"]
 margin_right = 229.0
-margin_bottom = 202.0
+margin_bottom = 191.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -243,12 +242,12 @@ __meta__ = {
 [node name="BBox" type="HBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox"]
 margin_top = 106.0
 margin_right = 229.0
-margin_bottom = 202.0
+margin_bottom = 191.0
 size_flags_vertical = 3
 
 [node name="LBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox"]
 margin_right = 112.0
-margin_bottom = 96.0
+margin_bottom = 85.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/LBox"]
@@ -274,7 +273,7 @@ __meta__ = {
 [node name="RBox" type="VBoxContainer" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox"]
 margin_left = 116.0
 margin_right = 229.0
-margin_bottom = 96.0
+margin_bottom = 85.0
 size_flags_horizontal = 3
 
 [node name="Label2" type="Label" parent="UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/BBox/RBox"]
@@ -297,7 +296,7 @@ __meta__ = {
 }
 
 [node name="InfoPanel" type="PanelContainer" parent="UI/HBoxContainer/RightSideInfo"]
-margin_top = 424.0
+margin_top = 413.0
 margin_right = 243.0
 margin_bottom = 640.0
 size_flags_vertical = 3
@@ -307,7 +306,7 @@ size_flags_stretch_ratio = 3.0
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 236.0
-margin_bottom = 209.0
+margin_bottom = 220.0
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 

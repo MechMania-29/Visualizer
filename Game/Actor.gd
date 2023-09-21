@@ -123,8 +123,9 @@ func die():
 func ability(target):
 	if (my_class == "MEDIC" or my_class == "BUILDER"):
 		self.play(getAnimPrefix(false) + "A")
-		$ActionArrow.rotation = (target-self.position).angle() + PI/2
-		$ActionArrow.show()
+		if ((target - self.position).length_squared() > 0):
+			$ActionArrow.rotation = (target-self.position).angle() + PI/2
+			$ActionArrow.show()
 
 func getAnimPrefix(checkZombie=true):
 	if (isZombie and checkZombie) or my_class == "ZOMBIE":
