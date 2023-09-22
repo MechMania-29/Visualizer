@@ -19,7 +19,9 @@ We provide the visualizer on the mechmania website. You should be able to use th
 
 If you encounter issues, you can install the visualizer manually by downloading [the latest release](https://github.com/MechMania-29/Visualizer/releases) and run the .exe.
 
-The visualizer was developed with the Godot game engine. If you'd like to open this in Godot, you can download [Godot v3.5.1](https://godotengine.org/download/archive/3.5.1-stable/) as the visualizer is stable on that version.
+The visualizer was developed with the Godot game engine. If you'd like to open this in Godot, you can download [Godot v3.4.2](https://godotengine.org/download/archive/3.4.2-stable/) as the visualizer is stable on that version.
+
+If the visualizer refuses to accept your gamelog and pops up the file select again, you have most likely uploaded the wrong file. Try again and be careful to select the right file. If the problem persists, contact the Mechmania staff, and we should be able to fix your issue promptly.
 
 # Controls
   ##### Keyboard controls
