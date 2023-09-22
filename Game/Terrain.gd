@@ -39,7 +39,7 @@ func set_status(new_type, new_health, new_id=null):
 	if (type == "river" and has_fish):
 		type = "riverfish"
 	var eff_health = ceil(health / max_healths[type] * sprite_health_states[type])
-	play(type+str(health))
+	play(type+str(eff_health))
 	show()
 
 func get_status():

@@ -29,6 +29,16 @@ func setTerrain(terrain_type, health, pos_dict, id):
 		self.add_child(new_terrain)
 		terrain_dict[pos][id] = new_terrain
 	terrain_dict[pos][id].set_status(terrain_type, health, id)
+	if terrain_dict[pos].size() > 1:
+		var has_terrain = false
+		for id_iter in terrain_dict[pos]:
+			if (terrain_dict[pos][id_iter].health != 0):
+				has_terrain = true
+				break
+		if (has_terrain):
+			for id_iter in terrain_dict[pos]:
+				if (terrain_dict[pos][id_iter].health == 0):
+					terrain_dict[pos][id_iter].hide()
 
 func hurtTerrain(pos, damage, id):
 	if !terrain_dict.has(pos) or !terrain_dict[pos].has(id):
