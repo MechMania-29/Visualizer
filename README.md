@@ -30,7 +30,7 @@ If the visualizer refuses to accept your gamelog and pops up the file select aga
   Left click and drag to pan the camera. Scroll to zoom in and out. Right click to select a square for more information.
 
 # Game Board
-![diagram](https://github.com/MechMania-29/Visualizer/assets/90988235/d4e32f30-5923-4e9d-98be-bf9909ca9281)
+![diagram](diagram.png)
 
  1. This is the timeline, which displays which turn it is, and offers another way to pause and play the simulation. Click and drag the timeline to quickly view another turn.
   2. This is a minimap. Only humans, displayed as black dots, and zombies, displayed as green dots, are shown on the minimap.
