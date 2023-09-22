@@ -2,7 +2,7 @@
 
 <a href="https://mechmania.org"><img width="25%" src="https://github.com/MechMania-29/Website/blob/main/images/mm29_logo.png" alt="MechMania 29"></a>
 
-### [website](https://mechmania.org) | [python-starterpack](https://github.com/MechMania-29/python-starterpack) | [java-starterpack](https://github.com/MechMania-29/java-starterpack) | visualizer | [engine](https://github.com/MechMania-29/engine)
+### [website](https://mechmania.org) | [python-starterpack](https://github.com/MechMania-29/python-starterpack) | [java-starterpack](https://github.com/MechMania-29/java-starterpack) | visualizer | [engine](https://github.com/MechMania-29/engine) | [wiki](https://github.com/MechMania-29/Wiki)
 
 # MechMania Visualizer
 
@@ -14,7 +14,12 @@ This allows you to view what's actually going on it your games and adjust your b
 ---
 
 # Installation
-Either download the latest release and run the .exe, or visit the visualizer website. We recommend you use the website.
+
+We provide the visualizer on the mechmania website. You should be able to use that without having to install anything.
+
+If you encounter issues, you can install the visualizer manually by downloading [the latest release](https://github.com/MechMania-29/Visualizer/releases) and run the .exe.
+
+The visualizer was developed with the Godot game engine. If you'd like to open this in Godot, you can download [Godot v3.5.1](https://godotengine.org/download/archive/3.5.1-stable/) as the visualizer is stable on that version.
 
 # Controls
   ##### Keyboard controls
