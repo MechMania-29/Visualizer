@@ -5,6 +5,8 @@ const BOARD_X_OFFSET = 0
 const BOARD_Y_OFFSET = 0
 const TOTAL_TURN_TIME = 1.0
 
+const AUTOPLAY = true
+
 signal gamelog_verification_start
 signal gamelog_verification_complete
 signal gamelog_verification_failed

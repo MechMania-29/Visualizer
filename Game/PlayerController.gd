@@ -137,8 +137,11 @@ func nextTurn():
 			actors[i].resetArrows()
 		
 		if turn >= len(turns)-1:
-			UI.force_pause(true)
-			$TurnTimer.set_paused(true)
+			if (Global.AUTOPLAY):
+				emit_signal("restart")
+			else:
+				UI.force_pause(true)
+				$TurnTimer.set_paused(true)
 
 
 func jumpToTurn(new_turn):
@@ -252,6 +255,13 @@ func _on_UI_timeline_interaction(clicked):
 func startup(new_gamelog, new_terrain):
 	gamelog = new_gamelog
 	terrain = new_terrain
+	
+	#clean up for restart
+	turn = 0
+	for i in range(len(actors)):
+		get_parent().remove_child(actors[i])
+	actors = []
+	T_Map.resetGrid()
 	
 	# create actors
 	for i in range(gamelog["setup"]["totalCharacters"]):

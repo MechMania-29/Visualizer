@@ -149,15 +149,30 @@ margin_bottom = 640.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 10.0
 
-[node name="Minimap" type="TextureRect" parent="UI/HBoxContainer/RightSideInfo"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/HBoxContainer/RightSideInfo"]
+margin_right = 243.0
+margin_bottom = 200.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/HBoxContainer/RightSideInfo/HBoxContainer"]
+margin_right = 39.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 20.0
+
+[node name="Minimap" type="TextureRect" parent="UI/HBoxContainer/RightSideInfo/HBoxContainer"]
+margin_left = 43.0
 margin_right = 243.0
 margin_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
 texture = ExtResource( 3 )
-stretch_mode = 6
+stretch_mode = 4
 script = ExtResource( 4 )
 
 [node name="Panel" type="PanelContainer" parent="UI/HBoxContainer/RightSideInfo"]

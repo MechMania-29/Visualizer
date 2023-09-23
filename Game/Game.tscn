@@ -49,6 +49,7 @@ modulate = Color( 1, 1, 1, 0.356863 )
 texture = ExtResource( 6 )
 centered = false
 
+[connection signal="restart" from="PlayerController" to="CanvasLayer/FileSelect" method="_on_PlayerController_restart"]
 [connection signal="timeout" from="PlayerController/TurnTimer" to="PlayerController" method="_on_Timer_timeout"]
 [connection signal="file_loaded" from="CanvasLayer/FileSelect" to="PlayerController" method="_on_FileSelect_file_loaded"]
 [connection signal="mouse_entered_any" from="CanvasLayer/UI" to="." method="_on_UI_mouse_entered_any"]

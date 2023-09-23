@@ -56,7 +56,6 @@ func change_max_turns(turns):
 	$UI/HBoxContainer/TimeControls/Timeline.max_value = turns - 1
 
 
-
 func _on_Timeline_mouse_entered():
 	emit_signal("mouse_entered_any")
 
@@ -77,8 +76,8 @@ func _on_Timeline_mouse_exited():
 	emit_signal("mouse_exited_any")
 
 func update_minimap(new_map):
-	$UI/HBoxContainer/RightSideInfo/Minimap.board = new_map
-	$UI/HBoxContainer/RightSideInfo/Minimap.update()
+	$UI/HBoxContainer/RightSideInfo/HBoxContainer/Minimap.board = new_map
+	$UI/HBoxContainer/RightSideInfo/HBoxContainer/Minimap.update()
 
 func update_score(zombie_score, human_score):
 	$UI/HBoxContainer/RightSideInfo/Panel/MarginContainer/ScoreLeftBox/TBox/LBox/ZScore.text = str(zombie_score)

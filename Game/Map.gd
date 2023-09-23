@@ -10,6 +10,7 @@ var terrain_dict = {}
 func _ready():
 	resetGrid()
 
+
 func updateGridSize(new_size):
 	grid_size = new_size
 	resetGrid()

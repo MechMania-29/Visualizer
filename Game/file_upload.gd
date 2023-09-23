@@ -18,6 +18,8 @@ signal in_focus
 
 onready var dir
 var dirpath = "C:\\Users\\dding\\Desktop\\games"
+
+var files_played = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#Progress.hide()
@@ -29,24 +31,27 @@ func _ready():
 	_err = Global.connect("gamelog_verification_failed",self,"_on_verification_failed")
 	
 	#taking only 
-	if false:
+	if Global.AUTOPLAY:
 		dirpath = OS.get_executable_path().get_base_dir()
+		print(dirpath)
 		dir = Directory.new()
 		dir.open(dirpath)
 		dir.list_dir_begin()
 		filename = dir.get_next()
-		
 		while (filename == "." or filename == ".." or filename == "MM29.exe" or filename == "MM29.pck"):
 			filename = dir.get_next()
-		print(filename)
+		print(dirpath + "/" + filename)
 		#get_parent().get_parent().get_node("Filename").text = filename
-		_on_FileDialog_file_selected(filename)
-		#var file = File.new()
-		#file.open(dirpath + "\\" + filename, File.READ)
+		var file = File.new()
+		files_played.append(filename)
+		file.open(dirpath + "/" + filename, File.READ)
 		
-		#var json_result = JSON.parse(file.get_as_text())
-		
-		#Global.verify_GameLog(json_result.result)
+		var json_result = JSON.parse(file.get_as_text())
+		print(json_result.error)
+		file.close()
+		GameLog = json_result.result
+		yield(get_tree().create_timer(0.1), "timeout")
+		Global.verify_GameLog(json_result.result)
 	else:
 		if Global.use_js:
 			_define_js()
@@ -76,7 +81,6 @@ func _on_FileDialog_file_selected(path):
 
 
 func web_load_file():
-	
 	if not Global.use_js:
 		FileDia.show()
 		return
@@ -216,12 +220,13 @@ func _exit_tree():
 
 
 func _on_PlayerController_restart():
-	return
 	dir.list_dir_end()
 	dir.list_dir_begin(true, true)
 	filename = dir.get_next()
-	while (filename == "MM29.exe" or filename == "MM29.pck"):
+	while (filename == "MM29.exe" or filename == "MM29.pck" or files_played.has(filename)):
 		filename = dir.get_next()
 	if (filename != ""):
 		#get_parent().get_parent().get_node("Filename").text = filename
-		_on_FileDialog_file_selected(filename)
+		print(dirpath + "/" + filename)
+		files_played.append(filename)
+		_on_FileDialog_file_selected(dirpath + "/" + filename)
