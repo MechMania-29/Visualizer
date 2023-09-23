@@ -15,7 +15,7 @@ This allows you to view what's actually going on it your games and adjust your b
 
 # Installation
 
-We provide the visualizer on the mechmania website. You should be able to use that without having to install anything.
+We provide the visualizer on the [mechmania website](https://www.mechmania.org/visualizer/MechMania29.html). You should be able to use that without having to install anything.
 
 If you encounter issues, you can install the visualizer manually by downloading [the latest release](https://github.com/MechMania-29/Visualizer/releases) and run the .exe.
 
